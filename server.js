@@ -20,9 +20,15 @@ app.get('/api/news', async (req, res) => {
 
     const newsList = [];
     $('.info_con li').each((_, el) => {
-      const title = $(el).find('.title_con span').text().trim();
-      const date = $(el).find('.date').text().trim();
-      if (title) newsList.push({ title, date });
+      const title = $(el).find(".title_con span").text().trim();
+      const date = $(el).find(".date").text().trim();
+      const url = "https://www.yakup.com" + $(el).find("a").attr("href");
+      const thumb = $(el).find(".thum_con")[0]?.attribs?.style;
+      const thumbUrl = thumb?.match(/url\(['"]?(.*?)['"]?\)/)?.[1] || null;
+
+      if (title) newsList.push({ title, date, url, thumbUrl });
+
+      // console.log(title, urlAddr, date);
     });
 
     res.json(newsList);
